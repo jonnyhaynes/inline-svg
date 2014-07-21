@@ -33,4 +33,3 @@ For increased accessibility the code will copy across the `<img>`'s alt text and
 ### TODO
 
 * Stop the reliance on jQuery
-* Minify the file
