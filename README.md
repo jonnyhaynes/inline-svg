@@ -12,7 +12,7 @@ Use an `<img>` tag in your HTML to embed an SVG graphic. Use something like Adob
 
 This is just like how you'd embed a normal image. Note that you need to set the `<img>` to have a class of svg. You can have more than one class, but the svg class is required. The ID is not required.
 
-What the above code does is look for all `<img>`'s with a class of svg and replace's it with the inline SVG from the linked file. The massive advantage is that it allows you to use CSS to change the color of the SVG now, like so:
+What the code does is look for all `<img>`s with a class of svg and replaces them with the inline SVG from the linked file. You can now manipulate the ANY part of the SVG, be it the `<path>` or a group (`<g>`). See below:
 
 ```
 svg:hover path {
