@@ -1,7 +1,31 @@
-inlineSVG
-=========
+# inlineSVG
 
 Takes an inline `<img>` with an SVG as it's source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
 Based on this [Stack Overflow](http://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement) post's answer by [Drew Baker](http://stackoverflow.com/users/503546/drew-baker) with some enhancements.
 
+## How to use
+
+Use an `<img>` tag in your HTML to embed an SVG graphic. Use something like Adobe Illustrator to make the graphic and save out the SVG file.
+
+`<img id="logo" class="svg" src="/images/logo.svg" alt="Some awesome company" />`
+
+This is just like how you'd embed a normal image. Note that you need to set the `<img>` to have a class of svg. You can have more than one class, but the svg class is required. The ID is not required.
+
+What the above code does is look for all `<img>`'s with a class of svg and replace's it with the inline SVG from the linked file. The massive advantage is that it allows you to use CSS to change the color of the SVG now, like so:
+
+```
+svg:hover path {
+  fill: #c00;
+  }
+```
+
+Because the code also ports across the original images ID and classes, this CSS works too:
+
+```
+#logo:hover path { 
+  fill: #c00;
+  }
+```
+
+For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
