@@ -1,25 +1,58 @@
 function inlineSVG() {
-  $('img.svg').not('.replaced-svg').each(function() {
-    var theIMG = jQuery(this), imgID = theIMG.attr('id'), imgClass = theIMG.attr('class'), imgURL = theIMG.attr('src'), imgAlt = theIMG.attr('alt');
+  // grab all svgs
+  var svgs = document.querySelectorAll('img.svg');
 
-    $.get(imgURL, function(data) {
-      // Get the SVG tag, ignore the rest of the crap spat out by Illustrator
-      var theSVG = $(data).find('svg');
+  // loop through all the svgs
+  for (i = 0; i < svgs.length; i++) {
 
-      // Copy image's ID to the new SVG
-      if(typeof imgID !== 'undefined') {
-        theSVG = theSVG.attr('id', imgID);
-      }
-      // Copy image's classes to the new SVG
-      if(typeof imgClass !== 'undefined') {
-        theSVG = theSVG.attr('class', imgClass + ' replaced-svg');
-      }
+    // store a couple of useful variables
+    var img = svgs[i],
+        imgID = svgs[i].id,
+        imgClass = svgs[i].className,
+        imgUrl = svgs[i].src,
+        imgAlt = svgs[i].alt,
+        imgWidth = svgs[i].width,
+        imgHeight = svgs[i].height;
 
-      // Remove any invalid XML tags as per http://validator.w3.org and add in aria-label and title based on image alt for accessibility
-      theSVG = theSVG.removeAttr('xmlns:a width height x y enable-background xmlns:xlink xml:space').attr('aria-label', imgAlt).prepend('<title>' + imgAlt + '</title>');
+    // let's now grab the contents of the svg
+    // for some reason, this doesn't feel very efficient
+    var svg = new XMLHttpRequest();
+    svg.open("GET", imgUrl, false);
+    svg.send();
 
-      // Replace image with new SVG
-      theIMG.replaceWith(theSVG);
-    });
-  });
+    // we're returning as XML so we can manipulate it below
+    var svgResult = svg.responseXML;
+
+    // just grab everything inside the <svg> tag
+    var theSVG = svgResult.getElementsByTagName('svg')[0];
+
+    // copy any ids to the <svg>
+    if(typeof imgID !== 'undefined') {
+      theSVG.setAttribute('id', imgID);
+    }
+
+    // copy any classes to the <svg>
+    if(typeof imgClass !== 'undefined') {
+      theSVG.setAttribute('class', imgClass + ' replaced-svg');
+    }
+
+    // remove some junk
+    theSVG.removeAttribute('xmlns:a');
+    theSVG.removeAttribute('width');
+    theSVG.removeAttribute('height');
+    theSVG.removeAttribute('x');
+    theSVG.removeAttribute('y');
+    theSVG.removeAttribute('enable-background');
+    theSVG.removeAttribute('xmlns:xlink');
+    theSVG.removeAttribute('xml:space');
+    theSVG.removeAttribute('version');
+
+    // add some attributes
+    theSVG.setAttribute('aria-label', imgAlt);
+    theSVG.setAttribute('height', imgHeight);
+    theSVG.setAttribute('width', imgWidth);
+
+    // replace the image with the final <svg>
+    img.parentNode.replaceChild(theSVG, img);
+  }
 }
