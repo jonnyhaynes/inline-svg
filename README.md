@@ -2,7 +2,7 @@
 
 Takes an inline `<img>` with an SVG as it's source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
-Based on this [Stack Overflow](http://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement) post's answer by [Drew Baker](http://stackoverflow.com/users/503546/drew-baker) with some enhancements.
+Based on this [Stack Overflow](http://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement) post's answer by [Drew Baker](http://stackoverflow.com/users/503546/drew-baker) with some enhancements from myself and [Oliver Farrell](https://github.com/oliverfarrell).
 
 ## How to use
 
@@ -23,7 +23,7 @@ svg:hover path {
 Because the code also ports across the original images ID and classes, this CSS works too:
 
 ```
-#logo:hover path { 
+#logo:hover path {
   fill: #c00;
   }
 ```
@@ -32,4 +32,4 @@ For increased accessibility the code will copy across the `<img>`'s alt text and
 
 ### TODO
 
-* Stop the reliance on jQuery
+* Tun this into a plugin
