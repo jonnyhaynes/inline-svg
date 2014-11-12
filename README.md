@@ -1,4 +1,4 @@
-# inlineSVG
+# Inline SVG
 
 Takes an inline `<img>` with an SVG as it's source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
