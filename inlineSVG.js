@@ -10,9 +10,9 @@ function inlineSVG() {
         imgID = svgs[i].id,
         imgClass = svgs[i].className,
         imgUrl = svgs[i].src,
-        imgAlt = svgs[i].alt,
-        imgWidth = svgs[i].width,
-        imgHeight = svgs[i].height;
+        imgAlt = svgs[i].getAttribute('alt'),
+        imgWidth = svgs[i].getAttribute('width'),
+        imgHeight = svgs[i].getAttribute('height');
 
     // let's now grab the contents of the svg
     // for some reason, this doesn't feel very efficient
@@ -20,21 +20,13 @@ function inlineSVG() {
     svg.open("GET", imgUrl, false);
     svg.send();
 
-    // we're returning as XML so we can manipulate it below
-    var svgResult = svg.responseXML;
+    // we're returning as XML so we can manipulate it below and parse it
+    var svgText = svg.responseText;
+    parser = new DOMParser();
+    var svgResult = parser.parseFromString(svgText, "text/xml");
 
     // just grab everything inside the <svg> tag
     var theSVG = svgResult.getElementsByTagName('svg')[0];
-
-    // copy any ids to the <svg>
-    if(typeof imgID !== 'undefined') {
-      theSVG.setAttribute('id', imgID);
-    }
-
-    // copy any classes to the <svg>
-    if(typeof imgClass !== 'undefined') {
-      theSVG.setAttribute('class', imgClass + ' replaced-svg');
-    }
 
     // remove some junk
     theSVG.removeAttribute('xmlns:a');
@@ -47,10 +39,36 @@ function inlineSVG() {
     theSVG.removeAttribute('xml:space');
     theSVG.removeAttribute('version');
 
-    // add some attributes
-    theSVG.setAttribute('aria-label', imgAlt);
-    theSVG.setAttribute('height', imgHeight);
-    theSVG.setAttribute('width', imgWidth);
+    // copy any ids to the <svg>
+    if(imgID != 'undefined') {
+      theSVG.setAttribute('id', imgID);
+    }
+
+    // copy any classes to the <svg>
+    if(imgClass != 'undefined') {
+      theSVG.setAttribute('class', imgClass + ' replaced-svg');
+    }
+
+    // copy any widths to the <svg>
+    if(imgWidth != null) {
+      theSVG.setAttribute('width', imgWidth);
+    }
+
+    // copy any heights to the <svg>
+    if(imgHeight != null) {
+      theSVG.setAttribute('height', imgHeight);
+    }
+
+    // add an aria-label
+    if(imgAlt != null) {
+      theSVG.setAttribute('aria-label', imgAlt);
+
+      // add a title
+      var titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+      var titleContent = document.createTextNode(imgAlt);
+      titleElement.appendChild(titleContent);
+      theSVG.insertBefore(titleElement, theSVG.firstChild);
+    }
 
     // replace the image with the final <svg>
     img.parentNode.replaceChild(theSVG, img);
