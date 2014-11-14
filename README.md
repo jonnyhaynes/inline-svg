@@ -32,4 +32,4 @@ For increased accessibility the code will copy across the `<img>`'s alt text and
 
 ### TODO
 
-* Tun this into a plugin
+* Bower plugin?
