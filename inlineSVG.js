@@ -1,6 +1,7 @@
 function inlineSVG() {
   // grab all svgs
-  var svgs = document.querySelectorAll('img.svg');
+  var svgs = document.querySelectorAll('img.svg'),
+      i = 0;
 
   // loop through all the svgs
   for (i = 0; i < svgs.length; i++) {
@@ -21,9 +22,9 @@ function inlineSVG() {
     svg.send();
 
     // we're returning as XML so we can manipulate it below and parse it
-    var svgText = svg.responseText;
-    parser = new DOMParser();
-    var svgResult = parser.parseFromString(svgText, "text/xml");
+    var svgText = svg.responseText,
+        parser = new DOMParser(),
+        svgResult = parser.parseFromString(svgText, "text/xml");
 
     // just grab everything inside the <svg> tag
     var theSVG = svgResult.getElementsByTagName('svg')[0];
@@ -40,27 +41,27 @@ function inlineSVG() {
     theSVG.removeAttribute('version');
 
     // copy any ids to the <svg>
-    if(imgID != 'undefined') {
+    if(imgID !== '') {
       theSVG.setAttribute('id', imgID);
     }
 
     // copy any classes to the <svg>
-    if(imgClass != 'undefined') {
+    if(imgClass !== '') {
       theSVG.setAttribute('class', imgClass + ' replaced-svg');
     }
 
     // copy any widths to the <svg>
-    if(imgWidth != null) {
+    if(imgWidth !== null) {
       theSVG.setAttribute('width', imgWidth);
     }
 
     // copy any heights to the <svg>
-    if(imgHeight != null) {
+    if(imgHeight !== null) {
       theSVG.setAttribute('height', imgHeight);
     }
 
     // add an aria-label
-    if(imgAlt != null) {
+    if(imgAlt !== null) {
       theSVG.setAttribute('aria-label', imgAlt);
 
       // add a title
