@@ -1,0 +1,10 @@
+$ tree
+.
+|-- .travis.yml
+|-- Gruntfile.js
+|-- inlineSVG.js
+|-- inlineSVG.min.js
+|-- .gitignore
+|-- README.md
+|-- LICENSE
+`-- package.json
