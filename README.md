@@ -31,3 +31,11 @@ Because the code also ports across the original images ID and classes, this CSS 
 ```
 
 For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
+
+## Bower
+
+If you're using (Bower)[bower.io] to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.0"` in your `bower.json` file and run `bower install`.
+
+## Changelog
+
+- **15/12/14:** 1.0.0 – First major release: registered as a Bower plugin.
