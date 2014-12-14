@@ -1,0 +1,25 @@
+{
+  "name": "inline-svg",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jonnyhaynes/inline-svg",
+  "authors": [
+    "Jonny Haynes <jonny@colouringcode.com>",
+    "Oliver Farrell <oliver@oliverjfarrell.co.uk>"
+  ],
+  "description": "Takes an inline <img> with an SVG as its source and swaps it for an inline <svg> so you can manipulate the style of it with CSS/JS etc.",
+  "main": "inlineSVG.js",
+  "keywords": [
+    "svg",
+    "inline-svg",
+    "front-end",
+    "web"
+  ],
+  "license": "GNU",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jonnyhaynes/inline-svg.svg?branch=master)](https://travis-ci.org/jonnyhaynes/inline-svg)
 
-Takes an inline `<img>` with an SVG as it's source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
+Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
 Based on this [Stack Overflow](http://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement) post's answer by [Drew Baker](http://stackoverflow.com/users/503546/drew-baker) with some enhancements from myself and [Oliver Farrell](https://github.com/oliverfarrell).
 
@@ -19,7 +19,7 @@ What the code does is look for all `<img>`s with a class of svg and replaces the
 ```
 svg:hover path {
   fill: #c00;
-  }
+}
 ```
 
 Because the code also ports across the original images ID and classes, this CSS works too:
@@ -27,11 +27,7 @@ Because the code also ports across the original images ID and classes, this CSS 
 ```
 #logo:hover path {
   fill: #c00;
-  }
+}
 ```
 
 For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
-
-### TODO
-
-* Bower plugin?
