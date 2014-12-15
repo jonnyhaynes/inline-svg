@@ -34,7 +34,7 @@ For increased accessibility the code will copy across the `<img>`'s alt text and
 
 ## Bower
 
-If you're using (Bower)[bower.io] to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.0"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.0"` in your `bower.json` file and run `bower install`.
 
 ## Changelog
 
