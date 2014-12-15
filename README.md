@@ -34,8 +34,20 @@ For increased accessibility the code will copy across the `<img>`'s alt text and
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.0"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.2"` in your `bower.json` file and run `bower install`.
+
+## Browser support
+
+As the script utilises `querySelectorAll` to grab all the instances of `<img class="svg" />` the browser support matrix looks something like this:
+
+- Internet Explorer 8+
+- Firefox 3.5+
+- Chrome 4+
+- Safari 3.1+
+- Opera 10.1+
 
 ## Changelog
 
+- **15/12/14:** 1.0.2 – README updates to explain browser support.
+- **15/12/14:** 1.0.1 – README updates to explain Bower integration.
 - **15/12/14:** 1.0.0 – First major release: registered as a Bower plugin.
