@@ -52,7 +52,7 @@ However it's recommended that you check inline SVG browser support [here](http:/
 
 ## Changelog
 
-- **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to 'aria-labelledby' and also added `role="img"` for better accessibility.
+- **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.
 - **15/12/14:** 1.0.3 – Updated bower.json version number.
 - **15/12/14:** 1.0.2 – README updates to explain browser support.
 - **15/12/14:** 1.0.1 – README updates to explain Bower integration.
