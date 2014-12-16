@@ -32,9 +32,11 @@ Because the code also ports across the original images ID and classes, this CSS 
 
 For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
+For a live demo check out this [example on CodePen](http://codepen.io/oliverfarrell/pen/GgqJvB).
+
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.3"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.4"` in your `bower.json` file and run `bower install`.
 
 ## Browser support
 
@@ -46,8 +48,11 @@ As the script utilises `querySelectorAll` to grab all the instances of `<img cla
 - Safari 3.1+
 - Opera 10.1+
 
+However it's recommended that you check inline SVG browser support [here](http://caniuse.com/#search=inline%20svg) as it's not necessarily the same as above.
+
 ## Changelog
 
+- **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to 'aria-labelledby' and also added `role="img"` for better accessibility.
 - **15/12/14:** 1.0.3 – Updated bower.json version number.
 - **15/12/14:** 1.0.2 – README updates to explain browser support.
 - **15/12/14:** 1.0.1 – README updates to explain Bower integration.

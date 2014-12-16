@@ -60,9 +60,10 @@ function inlineSVG() {
       theSVG.setAttribute('height', imgHeight);
     }
 
-    // add an aria-label and a title
+    // add an aria-labelledby, role and a title
     if(imgAlt) {
-      theSVG.setAttribute('aria-label', imgAlt);
+      theSVG.setAttribute('aria-labelledby', 'title');
+      theSVG.setAttribute('role', 'img');
 
       // add a title
       var titleElement = document.createElementNS('http://www.w3.org/2000/svg', 'title');
