@@ -1,6 +1,6 @@
 # Inline SVG
 
-[![Build Status](https://travis-ci.org/jonnyhaynes/inline-svg.svg?branch=master)](https://travis-ci.org/jonnyhaynes/inline-svg) [![Code Climate](https://codeclimate.com/github/jonnyhaynes/inline-svg/badges/gpa.svg)](https://codeclimate.com/github/jonnyhaynes/inline-svg) [![Bower](https://img.shields.io/bower/v/inline-svg.svg)](https://github.com/jonnyhaynes/inline-svg) [![David](https://img.shields.io/david/jonnyhaynes/inline-svg.svg)](https://github.com/jonnyhaynes/inline-svg)
+[![Build Status](https://travis-ci.org/jonnyhaynes/inline-svg.svg?branch=master)](https://travis-ci.org/jonnyhaynes/inline-svg) [![Code Climate](https://codeclimate.com/github/jonnyhaynes/inline-svg/badges/gpa.svg)](https://codeclimate.com/github/jonnyhaynes/inline-svg) [![Bower](https://img.shields.io/bower/v/inline-svg.svg)](https://github.com/jonnyhaynes/inline-svg) [![Dependency Status](https://david-dm.org/jonnyhaynes/inline-svg.svg)](https://david-dm.org/jonnyhaynes/inline-svg)
 
 Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
