@@ -1,4 +1,4 @@
-function inlineSVG() {
+var inlineSVG = function() {
   // grab all svgs
   var svgs = document.querySelectorAll('img.svg'),
   i = 0;

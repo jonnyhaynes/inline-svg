@@ -36,7 +36,7 @@ For a live demo check out this [example on CodePen](http://codepen.io/oliverfarr
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.4"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.5"` in your `bower.json` file and run `bower install`.
 
 ## Browser support
 
@@ -52,6 +52,7 @@ However it's recommended that you check inline SVG browser support [here](http:/
 
 ## Changelog
 
+- **19/03/15:** 1.0.5 - Cleaning code to comply with Code Climate
 - **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.
 - **15/12/14:** 1.0.3 – Updated bower.json version number.
 - **15/12/14:** 1.0.2 – README updates to explain browser support.
