@@ -32,7 +32,7 @@ Because the code also ports across the original images ID and classes, this CSS 
 
 For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
-For a live demo check out this [example on CodePen](http://codepen.io/oliverfarrell/pen/GgqJvB).
+For a live demo check out this [example on CodePen](http://codepen.io/jonnyhaynes/pen/VYqroO).
 
 ## Bower
 
