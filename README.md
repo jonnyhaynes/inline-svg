@@ -1,6 +1,6 @@
 # Inline SVG
 
-[![Build Status](https://travis-ci.org/jonnyhaynes/inline-svg.svg?branch=master)](https://travis-ci.org/jonnyhaynes/inline-svg) [![Code Climate](https://codeclimate.com/github/jonnyhaynes/inline-svg/badges/gpa.svg)](https://codeclimate.com/github/jonnyhaynes/inline-svg) [![Bower](https://img.shields.io/bower/v/inline-svg.svg)](https://github.com/jonnyhaynes/inline-svg) [![Dependency Status](https://david-dm.org/jonnyhaynes/inline-svg.svg)](https://david-dm.org/jonnyhaynes/inline-svg)
+[![Build Status](https://travis-ci.org/jonnyhaynes/inline-svg.svg?branch=master)](https://travis-ci.org/jonnyhaynes/inline-svg) [![Code Climate](https://codeclimate.com/github/jonnyhaynes/inline-svg/badges/gpa.svg)](https://codeclimate.com/github/jonnyhaynes/inline-svg) [![npm](https://img.shields.io/npm/v/inline-svg.svg)](https://www.npmjs.com/package/inline-svg) [![Bower](https://img.shields.io/bower/v/inline-svg.svg)](https://github.com/jonnyhaynes/inline-svg) [![Dependency Status](https://david-dm.org/jonnyhaynes/inline-svg.svg)](https://david-dm.org/jonnyhaynes/inline-svg)
 
 Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
@@ -36,7 +36,10 @@ For a live demo check out this [example on CodePen](http://codepen.io/jonnyhayne
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.0.5"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.2.0"` in your `bower.json` file and run `bower install`.
+
+## NPM
+If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
 
 ## Browser support
 
@@ -52,7 +55,8 @@ However it's recommended that you check inline SVG browser support [here](http:/
 
 ## Changelog
 
-- **19/03/15:** 1.0.5 - Cleaning code to comply with Code Climate
+- **18/06/15:** 1.2.0 – Converted to a Node.js module
+- **19/03/15:** 1.0.5 – Cleaning code to comply with Code Climate
 - **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.
 - **15/12/14:** 1.0.3 – Updated bower.json version number.
 - **15/12/14:** 1.0.2 – README updates to explain browser support.
