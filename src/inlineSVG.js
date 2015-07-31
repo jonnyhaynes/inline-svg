@@ -13,12 +13,52 @@
   'use strict';
 
   // Variables
-  var inlineSVG = {};
+  var inlineSVG = {},
+      supports = !!document.querySelector && !!root.addEventListener,
+      settings;
 
   // Defaults
   var defaults = {
     initClass: 'js-inlinesvg',
     svgSelector: 'img.svg'
+  };
+
+  var extend = function (fn) {
+
+    // Variables
+    var extended = {};
+    var deep = false;
+    var i = 0;
+    var length = arguments.length;
+
+    // Check if a deep merge
+    if ( Object.prototype.toString.call( arguments[0] ) === '[object Boolean]' ) {
+      deep = arguments[0];
+      i++;
+    }
+
+    // Merge the object into the extended object
+    var merge = function (obj) {
+      for ( var prop in obj ) {
+        if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
+          // If deep merge and property is an object, merge properties
+          if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
+            extended[prop] = buoy.extend( true, extended[prop], obj[prop] );
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
+      }
+    };
+
+    // Loop through each object and conduct a merge
+    for ( ; i < length; i++ ) {
+      var obj = arguments[i];
+      merge(obj);
+    }
+
+    return extended;
+
   };
 
   // Methods
@@ -29,7 +69,7 @@
    */
   inlineSVG.getAll = function () {
 
-    var svgs = document.querySelectorAll(defaults.svgSelector);
+    var svgs = document.querySelectorAll(settings.svgSelector);
     return svgs;
 
   };
@@ -123,13 +163,19 @@
    * Initialise the inliner
    * @public
    */
-  inlineSVG.init = function () {
+  inlineSVG.init = function (options) {
+
+    // Test for support
+    if (!supports) return;
+
+    // Merge users option with defaults
+    settings = extend(defaults, options || {});
 
     // Kick-off the inliner
     inlineSVG.inliner();
 
     // Once inlined and a class to the HTML
-    document.documentElement.className += ' ' + defaults.initClass;
+    document.documentElement.className += ' ' + settings.initClass;
 
   };
 

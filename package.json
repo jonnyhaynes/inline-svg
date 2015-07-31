@@ -22,7 +22,10 @@
     "inline-SVG",
     "front-end"
   ],
-  "author": "Jonny Haynes <jonny@colouringcode.com> (http://www.colouringcode.com)",
+  "authors": [
+    "Oliver Farrell <oliver@oliverjfarrell.co.uk>",
+    "Jonny Haynes <jonny@colouringcode.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jonnyhaynes/inline-svg/issues"

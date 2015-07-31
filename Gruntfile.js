@@ -2,12 +2,12 @@ module.exports = function(grunt) {
 
   grunt.initConfig({
     jshint: {
-      all: ['Gruntfile.js', 'inlineSVG.js']
+      all: ['Gruntfile.js', 'src/inlineSVG.js']
     },
     uglify: {
       my_target: {
         files: {
-          'inlineSVG.min.js': 'inlineSVG.js'
+          'dist/inlineSVG.min.js': 'src/inlineSVG.js'
         }
       }
     }
