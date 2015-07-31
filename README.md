@@ -8,7 +8,7 @@ Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<s
 
 Add the Inline SVG script to your page and initialise the script. You can currently pass two options to the script: `svgSelector` and `initClass`. If these are left out the script will use the defaults.
 
-```
+```html
 <script src="inlineSVG.min.js"></script>
 <script>
 inlineSVG.init({
