@@ -41,14 +41,14 @@ For a live demo check out this [example on CodePen](http://codepen.io/jonnyhayne
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.0.0"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.0.1"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
 
 ## Changelog
 
-- **21/07/15:** 2.0.0 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously. 
+- **21/07/15:** 2.0.1 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously. 
 - **18/06/15:** 1.2.0 – Converted to a Node.js module
 - **19/03/15:** 1.0.5 – Cleaning code to comply with Code Climate
 - **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.
