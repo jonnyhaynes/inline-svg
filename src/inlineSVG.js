@@ -29,7 +29,7 @@
    * @private
    * @param {Function} fn
    */
-  var extend = function (fn) {
+  var extend = function () {
 
     // Variables
     var extended = {};
@@ -49,7 +49,7 @@
         if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
           // If deep merge and property is an object, merge properties
           if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
-            extended[prop] = buoy.extend( true, extended[prop], obj[prop] );
+            extended[prop] = extend( true, extended[prop], obj[prop] );
           } else {
             extended[prop] = obj[prop];
           }
