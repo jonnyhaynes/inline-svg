@@ -4,57 +4,51 @@
 
 Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<svg>` so you can manipulate the style of it with CSS/JS etc.
 
-Based on this [Stack Overflow](http://stackoverflow.com/questions/11978995/how-to-change-color-of-svg-image-using-css-jquery-svg-image-replacement) post's answer by [Drew Baker](http://stackoverflow.com/users/503546/drew-baker) with some enhancements from myself and [Oliver Farrell](https://github.com/oliverfarrell).
-
 ## How to use
 
-Use an `<img>` tag in your HTML to embed an SVG graphic. Use something like Adobe Illustrator to make the graphic and save out the SVG file.
-
-`<img id="logo" class="svg" src="/images/logo.svg" alt="Some awesome company" />`
-
-This is just like how you'd embed a normal image. Note that you need to set the `<img>` to have a class of svg. You can have more than one class, but the svg class is required. The ID is not required.
-
-What the code does is look for all `<img>`s with a class of svg and replaces them with the inline SVG from the linked file. You can now manipulate the ANY part of the SVG, be it the `<path>` or a group (`<g>`). See below:
+Add the Inline SVG script to your page and initialise the script. You can currently pass two options to the script: `svgSelector` and `initClass`. If these are left out the script will use the defaults.
 
 ```
+<script src="inlineSVG.min.js"></script>
+<script>
+inlineSVG.init({
+  svgSelector: 'img.svg',
+  initClass: 'js-inlinesvg' // class added to <html>
+});
+</script>
+```
+
+The script will look for any `<img>` with a class that matches the `svgSelector` parameter and replace it with the SVG's source. Doing this enables you to manipulate the SVG with CSS and JavaScript. 
+
+```html
+<img id="logo" class="svg" src="/images/logo.svg" alt="Some awesome company" />
+```
+
+```css
 svg:hover path {
   fill: #c00;
 }
-```
 
-Because the code also ports across the original images ID and classes, this CSS works too:
-
-```
+// or
 #logo:hover path {
   fill: #c00;
 }
 ```
 
-For increased accessibility the code will copy across the `<img>`'s alt text and add in an `aria-label` and `<title>` to the SVG as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
+Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to the SVG. For increased accessibility the script will also copy across the `<img>` alt text and add in an `aria-labelledby` attribute and `<title>` element to the SVG. If you give the `<img>` a `longdesc` attribute, a `<desc>` will also be added as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
 For a live demo check out this [example on CodePen](http://codepen.io/jonnyhaynes/pen/VYqroO).
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "1.2.0"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.0.0"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
 
-## Browser support
-
-As the script utilises `querySelectorAll` to grab all the instances of `<img class="svg" />` the browser support matrix looks something like this:
-
-- Internet Explorer 8+
-- Firefox 3.5+
-- Chrome 4+
-- Safari 3.1+
-- Opera 10.1+
-
-However it's recommended that you check inline SVG browser support [here](http://caniuse.com/#search=inline%20svg) as it's not necessarily the same as above.
-
 ## Changelog
 
+- **21/07/15:** 2.0.0 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously. 
 - **18/06/15:** 1.2.0 – Converted to a Node.js module
 - **19/03/15:** 1.0.5 – Cleaning code to comply with Code Climate
 - **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.

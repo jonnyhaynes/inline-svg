@@ -130,9 +130,18 @@
           }
 
           // Add in some accessibility quick wins
+          inlinedSVG.setAttribute('role', 'img');
+
+          if(attributes.longdesc) {
+            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
+                descriptionText = document.createTextNode(attributes.longdesc.value);
+
+            description.appendChild(descriptionText);
+            inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
+          }
+
           if(attributes.alt) {
             inlinedSVG.setAttribute('aria-labelledby', 'title');
-            inlinedSVG.setAttribute('role', 'img');
 
             var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
                 titleText = document.createTextNode(attributes.alt.value);
