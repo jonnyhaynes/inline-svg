@@ -23,6 +23,12 @@
     svgSelector: 'img.svg'
   };
 
+
+  /**
+   * Merge two objects together
+   * @private
+   * @param {Function} fn
+   */
   var extend = function (fn) {
 
     // Variables
@@ -88,82 +94,99 @@
       var src = svg.src,
           attributes = svg.attributes;
 
-      // Get the contents of the SVG
-      var request = new XMLHttpRequest();
-      request.open('GET', src, true);
+      if(!localStorage.getItem(src)) {
 
-      request.onload = function () {
-        
-        if(request.status >= 200 && request.status < 400) {
+        // Get the contents of the SVG
+        var request = new XMLHttpRequest();
+        request.open('GET', src, true);
+
+        request.onload = function () {
           
-          // Setup a parser to convert the response to text/xml in order for it
-          // to be manipulated and changed
-          var parser = new DOMParser(),
-              result = parser.parseFromString(request.responseText, "text/xml"),
-              inlinedSVG = result.getElementsByTagName('svg')[0];
+          if(request.status >= 200 && request.status < 400) {
+            
+            // Setup a parser to convert the response to text/xml in order for it
+            // to be manipulated and changed
+            var parser = new DOMParser(),
+                result = parser.parseFromString(request.responseText, 'text/xml'),
+                inlinedSVG = result.getElementsByTagName('svg')[0];
 
-          // Remove some of the attributes that aren't needed
-          inlinedSVG.removeAttribute('xmlns:a');
-          inlinedSVG.removeAttribute('width');
-          inlinedSVG.removeAttribute('height');
-          inlinedSVG.removeAttribute('x');
-          inlinedSVG.removeAttribute('y');
-          inlinedSVG.removeAttribute('enable-background');
-          inlinedSVG.removeAttribute('xmlns:xlink');
-          inlinedSVG.removeAttribute('xml:space');
-          inlinedSVG.removeAttribute('version');
+            // Remove some of the attributes that aren't needed
+            inlinedSVG.removeAttribute('xmlns:a');
+            inlinedSVG.removeAttribute('width');
+            inlinedSVG.removeAttribute('height');
+            inlinedSVG.removeAttribute('x');
+            inlinedSVG.removeAttribute('y');
+            inlinedSVG.removeAttribute('enable-background');
+            inlinedSVG.removeAttribute('xmlns:xlink');
+            inlinedSVG.removeAttribute('xml:space');
+            inlinedSVG.removeAttribute('version');
 
-          // Add in the attributes from the original <img> except 'src' or
-          // 'alt', we don't need either
-          Array.prototype.slice.call(attributes).forEach(function(attribute) {
-            if(attribute.name !== 'src' && attribute.name !== 'alt') {
-              inlinedSVG.setAttribute(attribute.name, attribute.value);
+            // Add in the attributes from the original <img> except 'src' or
+            // 'alt', we don't need either
+            Array.prototype.slice.call(attributes).forEach(function(attribute) {
+              if(attribute.name !== 'src' && attribute.name !== 'alt') {
+                inlinedSVG.setAttribute(attribute.name, attribute.value);
+              }
+            });
+
+            // Add an additional class the the inlined SVG to imply it was
+            // infact inlined, might be useful to know
+            if (inlinedSVG.classList) {
+              inlinedSVG.classList.add('inlined-svg');
+            } else {
+              inlinedSVG.className += ' ' + 'inlined-svg';
             }
-          });
 
-          // Add an additional class the the inlined SVG to imply it was
-          // infact inlined, might be useful to know
-          if (inlinedSVG.classList) {
-            inlinedSVG.classList.add('inlined-svg');
+            // Add in some accessibility quick wins
+            inlinedSVG.setAttribute('role', 'img');
+
+            if(attributes.longdesc) {
+              var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
+                  descriptionText = document.createTextNode(attributes.longdesc.value);
+
+              description.appendChild(descriptionText);
+              inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
+            }
+
+            if(attributes.alt) {
+              inlinedSVG.setAttribute('aria-labelledby', 'title');
+
+              var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
+                  titleText = document.createTextNode(attributes.alt.value);
+
+              title.appendChild(titleText);
+              inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
+            }
+
+            // Store the source in localStorage to avoid making requests every time
+            var tempContainer = document.createElement('div');
+            tempContainer.appendChild(inlinedSVG);
+
+            localStorage.setItem(src, tempContainer.innerHTML);
+
+            // Replace the image with the SVG
+            svg.parentNode.replaceChild(inlinedSVG, svg);
+
           } else {
-            inlinedSVG.className += ' ' + 'inlined-svg';
+            console.error('There was an error retrieving the source of the SVG.');
           }
 
-          // Add in some accessibility quick wins
-          inlinedSVG.setAttribute('role', 'img');
+        };
 
-          if(attributes.longdesc) {
-            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
-                descriptionText = document.createTextNode(attributes.longdesc.value);
+        request.onerror = function () {
+          console.error('There was an error connecting to the origin server.');
+        };
 
-            description.appendChild(descriptionText);
-            inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
-          }
+        request.send();
+   
+      } else {
+        var parse = new DOMParser(),
+            result = parse.parseFromString(localStorage.getItem(src), 'text/xml'),
+            inlinedSVG = result.getElementsByTagName('svg')[0];
 
-          if(attributes.alt) {
-            inlinedSVG.setAttribute('aria-labelledby', 'title');
+        svg.parentNode.replaceChild(inlinedSVG, svg);
+      }
 
-            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
-                titleText = document.createTextNode(attributes.alt.value);
-
-            title.appendChild(titleText);
-            inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
-          }
-
-          svg.parentNode.replaceChild(inlinedSVG, svg);
-
-        } else {
-          console.error('There was an error retrieving the source of the SVG.');
-        }
-
-      };
-
-      request.onerror = function () {
-        console.error('There was an error connecting to the origin server.');
-      };
-
-      request.send();
- 
     });
 
   };
