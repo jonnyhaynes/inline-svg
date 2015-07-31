@@ -10,7 +10,7 @@
   "scripts": {
     "test": "grunt --verbose"
   },
-  "description": "Takes an inline image with an SVG as it's source and swaps it for an inline SVG ",
+  "description": "Takes an inline image with an SVG as it's source and swaps it for an inline SVG",
   "main": "inlineSVG.js",
   "repository": {
     "type": "git",

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inline SVG Demo</title>
+
+  <style>
+    svg path {
+      fill: red;
+    }
+  </style>
+</head>
+<body>
+  <img src="twitter.svg" width="20" height="20" alt="Twitter Icon" class="svg another-class">
+  <img src="facebook.svg" width="20" class="svg a-class">
+
+  <script src="../inlineSVG.js"></script>
+  <script>
+    inlineSVG.init();
+  </script>
+</body>
+</html>
