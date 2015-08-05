@@ -20,7 +20,9 @@
   // Defaults
   var defaults = {
     initClass: 'js-inlinesvg',
-    svgSelector: 'img.svg'
+    svgSelector: 'img.svg',
+    storeResults: true,
+    timeToStoreResult: 24
   };
 
 
@@ -73,7 +75,7 @@
    * Grab all the SVGs that match the selector
    * @public
    */
-  inlineSVG.getAll = function () {
+  var getAll = function () {
 
     var svgs = document.querySelectorAll(settings.svgSelector);
     return svgs;
@@ -84,9 +86,9 @@
    * Inline all the SVGs in the array
    * @public
    */
-  inlineSVG.inliner = function () {
+  var inliner = function () {
 
-    var svgs = inlineSVG.getAll();
+    var svgs = getAll();
 
     Array.prototype.forEach.call(svgs, function (svg, i) {
       
@@ -94,7 +96,7 @@
       var src = svg.src,
           attributes = svg.attributes;
 
-      if(!localStorage.getItem(src)) {
+      if(!localStorage.getItem(src) && settings.storeResults) {
 
         // Get the contents of the SVG
         var request = new XMLHttpRequest();
@@ -159,10 +161,20 @@
             }
 
             // Store the source in localStorage to avoid making requests every time
-            var tempContainer = document.createElement('div');
-            tempContainer.appendChild(inlinedSVG);
+            if(settings.storeResults) {
+              var tempContainer = document.createElement('div');
+              tempContainer.appendChild(inlinedSVG);
 
-            localStorage.setItem(src, tempContainer.innerHTML);
+              var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+              var timestamp = Math.round(tomorrow / 1000);
+
+              var object = {
+                "svg": tempContainer.innerHTML,
+                "timestamp": timestamp
+              }
+
+              localStorage.setItem(src, JSON.stringify(object));
+            }
 
             // Replace the image with the SVG
             svg.parentNode.replaceChild(inlinedSVG, svg);
@@ -180,11 +192,20 @@
         request.send();
    
       } else {
+        var object = JSON.parse(localStorage.getItem(src)),
+            item = object.svg,
+            expires = object.timestamp,
+            today = Math.round((new Date()).getTime() / 1000);
+
         var parse = new DOMParser(),
-            result = parse.parseFromString(localStorage.getItem(src), 'text/xml'),
+            result = parse.parseFromString(item, 'text/xml'),
             inlinedSVG = result.getElementsByTagName('svg')[0];
 
         svg.parentNode.replaceChild(inlinedSVG, svg);
+
+        if(expires < today) {
+          localStorage.removeItem(src)
+        }
       }
 
     });
@@ -204,7 +225,7 @@
     settings = extend(defaults, options || {});
 
     // Kick-off the inliner
-    inlineSVG.inliner();
+    inliner();
 
     // Once inlined and a class to the HTML
     document.documentElement.className += ' ' + settings.initClass;

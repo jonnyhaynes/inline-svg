@@ -6,14 +6,15 @@ Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<s
 
 ## How to use
 
-Add the Inline SVG script to your page and initialise the script. You can currently pass two options to the script: `svgSelector` and `initClass`. If these are left out the script will use the defaults.
+Add the Inline SVG script to your page and initialise the script. You can currently pass three options to the script: `svgSelector`, `initClass` and `storeResults`. If these are left out the script will use the defaults.
 
 ```html
 <script src="inlineSVG.min.js"></script>
 <script>
 inlineSVG.init({
-  svgSelector: 'img.svg',
-  initClass: 'js-inlinesvg' // class added to <html>
+  svgSelector: 'img.svg', // the class attached to all images that should be inlined
+  initClass: 'js-inlinesvg', // class added to <html>
+  storeResults: false // should the results be stored in localStorage
 });
 </script>
 ```
@@ -41,7 +42,7 @@ For a live demo check out this [example on CodePen](http://codepen.io/jonnyhayne
 
 ## Bower
 
-If you're using [Bower](bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.1.1"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.1.1"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
