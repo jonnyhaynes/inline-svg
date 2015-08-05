@@ -10,8 +10,6 @@
 
 })(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
 
-  'use strict';
-
   // Variables
   var inlineSVG = {},
       supports = !!document.querySelector && !!root.addEventListener,
