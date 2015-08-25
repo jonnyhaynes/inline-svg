@@ -19,8 +19,7 @@
   var defaults = {
     initClass: 'js-inlinesvg',
     svgSelector: 'img.svg',
-    storeResults: true,
-    timeToStoreResult: 24
+    storeResults: true
   };
 
 
@@ -94,7 +93,11 @@
       var src = svg.src,
           attributes = svg.attributes;
 
-      if(!localStorage.getItem(src) && settings.storeResults) {
+      if(!localStorage.getItem(src) || !settings.storeResults) {
+
+        // Just incase old versions of the SVG are saved and we've decided we no longer
+        // want to save the contents it makes sense to delete anything saved in localstorage
+        localStorage.removeItem(src)
 
         // Get the contents of the SVG
         var request = new XMLHttpRequest();
@@ -140,6 +143,7 @@
             // Add in some accessibility quick wins
             inlinedSVG.setAttribute('role', 'img');
 
+            // Use the `longdesc` attribute if one exists
             if(attributes.longdesc) {
               var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
                   descriptionText = document.createTextNode(attributes.longdesc.value);
@@ -148,6 +152,7 @@
               inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
             }
 
+            // Use the `alt` attribute if one exists
             if(attributes.alt) {
               inlinedSVG.setAttribute('aria-labelledby', 'title');
 
@@ -166,11 +171,13 @@
               var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
               var timestamp = Math.round(tomorrow / 1000);
 
+              // Create a JSON object
               var object = {
                 "svg": tempContainer.innerHTML,
                 "timestamp": timestamp
               }
 
+              // Store the object in localStorage
               localStorage.setItem(src, JSON.stringify(object));
             }
 
@@ -190,20 +197,32 @@
         request.send();
    
       } else {
-        var object = JSON.parse(localStorage.getItem(src)),
-            item = object.svg,
-            expires = object.timestamp,
-            today = Math.round((new Date()).getTime() / 1000);
 
+        // Store the saved SVG
+        var svgObject = JSON.parse(localStorage.getItem(src));
+
+        // Grab just the SVG
+        var theSvg = svgObject.svg;
+
+        // Grab the exipration date
+        var expires = svgObject.timestamp;
+
+        // Grab todays date for comparison
+        var today = Math.round((new Date()).getTime() / 1000);
+
+        // Parse the SVG string as XML
         var parse = new DOMParser(),
-            result = parse.parseFromString(item, 'text/xml'),
+            result = parse.parseFromString(theSvg, 'text/xml'),
             inlinedSVG = result.getElementsByTagName('svg')[0];
 
+        // Replace the <img> tag with the inline SVG
         svg.parentNode.replaceChild(inlinedSVG, svg);
 
+        // If the SVG should have expired remove it from localStorage
         if(expires < today) {
           localStorage.removeItem(src)
         }
+
       }
 
     });
