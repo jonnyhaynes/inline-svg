@@ -90,141 +90,90 @@
     Array.prototype.forEach.call(svgs, function (svg, i) {
       
       // Store some attributes of the image
-      var src = svg.src,
+      var src = svg.src || svg.getAttribute('data-src'),
           attributes = svg.attributes;
 
-      if(!localStorage.getItem(src) || !settings.storeResults) {
+      // Get the contents of the SVG
+      var request = new XMLHttpRequest();
+      request.open('GET', src, true);
 
-        // Just incase old versions of the SVG are saved and we've decided we no longer
-        // want to save the contents it makes sense to delete anything saved in localstorage
-        localStorage.removeItem(src)
+      request.onload = function () {
+        
+        if(request.status >= 200 && request.status < 400) {
 
-        // Get the contents of the SVG
-        var request = new XMLHttpRequest();
-        request.open('GET', src, true);
+          // Setup a parser to convert the response to text/xml in order for it
+          // to be manipulated and changed
+          var parser = new DOMParser(),
+              result = parser.parseFromString(request.responseText, 'text/xml'),
+              inlinedSVG = result.getElementsByTagName('svg')[0];
 
-        request.onload = function () {
-          
-          if(request.status >= 200 && request.status < 400) {
-            
-            // Setup a parser to convert the response to text/xml in order for it
-            // to be manipulated and changed
-            var parser = new DOMParser(),
-                result = parser.parseFromString(request.responseText, 'text/xml'),
-                inlinedSVG = result.getElementsByTagName('svg')[0];
+          // Remove some of the attributes that aren't needed
+          inlinedSVG.removeAttribute('xmlns:a');
+          inlinedSVG.removeAttribute('width');
+          inlinedSVG.removeAttribute('height');
+          inlinedSVG.removeAttribute('x');
+          inlinedSVG.removeAttribute('y');
+          inlinedSVG.removeAttribute('enable-background');
+          inlinedSVG.removeAttribute('xmlns:xlink');
+          inlinedSVG.removeAttribute('xml:space');
+          inlinedSVG.removeAttribute('version');
 
-            // Remove some of the attributes that aren't needed
-            inlinedSVG.removeAttribute('xmlns:a');
-            inlinedSVG.removeAttribute('width');
-            inlinedSVG.removeAttribute('height');
-            inlinedSVG.removeAttribute('x');
-            inlinedSVG.removeAttribute('y');
-            inlinedSVG.removeAttribute('enable-background');
-            inlinedSVG.removeAttribute('xmlns:xlink');
-            inlinedSVG.removeAttribute('xml:space');
-            inlinedSVG.removeAttribute('version');
-
-            // Add in the attributes from the original <img> except 'src' or
-            // 'alt', we don't need either
-            Array.prototype.slice.call(attributes).forEach(function(attribute) {
-              if(attribute.name !== 'src' && attribute.name !== 'alt') {
-                inlinedSVG.setAttribute(attribute.name, attribute.value);
-              }
-            });
-
-            // Add an additional class the the inlined SVG to imply it was
-            // infact inlined, might be useful to know
-            if (inlinedSVG.classList) {
-              inlinedSVG.classList.add('inlined-svg');
-            } else {
-              inlinedSVG.className += ' ' + 'inlined-svg';
+          // Add in the attributes from the original <img> except 'src' or
+          // 'alt', we don't need either
+          Array.prototype.slice.call(attributes).forEach(function(attribute) {
+            if(attribute.name !== 'src' && attribute.name !== 'alt') {
+              inlinedSVG.setAttribute(attribute.name, attribute.value);
             }
+          });
 
-            // Add in some accessibility quick wins
-            inlinedSVG.setAttribute('role', 'img');
-
-            // Use the `longdesc` attribute if one exists
-            if(attributes.longdesc) {
-              var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
-                  descriptionText = document.createTextNode(attributes.longdesc.value);
-
-              description.appendChild(descriptionText);
-              inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
-            }
-
-            // Use the `alt` attribute if one exists
-            if(attributes.alt) {
-              inlinedSVG.setAttribute('aria-labelledby', 'title');
-
-              var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
-                  titleText = document.createTextNode(attributes.alt.value);
-
-              title.appendChild(titleText);
-              inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
-            }
-
-            // Store the source in localStorage to avoid making requests every time
-            if(settings.storeResults) {
-              var tempContainer = document.createElement('div');
-              tempContainer.appendChild(inlinedSVG);
-
-              var tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-              var timestamp = Math.round(tomorrow / 1000);
-
-              // Create a JSON object
-              var object = {
-                "svg": tempContainer.innerHTML,
-                "timestamp": timestamp
-              }
-
-              // Store the object in localStorage
-              localStorage.setItem(src, JSON.stringify(object));
-            }
-
-            // Replace the image with the SVG
-            svg.parentNode.replaceChild(inlinedSVG, svg);
-
+          // Add an additional class the the inlined SVG to imply it was
+          // infact inlined, might be useful to know
+          if (inlinedSVG.classList) {
+            inlinedSVG.classList.add('inlined-svg');
           } else {
-            console.error('There was an error retrieving the source of the SVG.');
+            inlinedSVG.className += ' ' + 'inlined-svg';
           }
 
-        };
+          // Add in some accessibility quick wins
+          inlinedSVG.setAttribute('role', 'img');
 
-        request.onerror = function () {
-          console.error('There was an error connecting to the origin server.');
-        };
+          // Use the `longdesc` attribute if one exists
+          if(attributes.longdesc) {
+            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
+                descriptionText = document.createTextNode(attributes.longdesc.value);
 
-        request.send();
-   
-      } else {
+            description.appendChild(descriptionText);
+            inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
+          }
 
-        // Store the saved SVG
-        var svgObject = JSON.parse(localStorage.getItem(src));
+          // Use the `alt` attribute if one exists
+          if(attributes.alt) {
+            inlinedSVG.setAttribute('aria-labelledby', 'title');
 
-        // Grab just the SVG
-        var theSvg = svgObject.svg;
+            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
+                titleText = document.createTextNode(attributes.alt.value);
 
-        // Grab the exipration date
-        var expires = svgObject.timestamp;
+            title.appendChild(titleText);
+            inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
+          }
 
-        // Grab todays date for comparison
-        var today = Math.round((new Date()).getTime() / 1000);
+          // Replace the image with the SVG
+          svg.parentNode.replaceChild(inlinedSVG, svg);
 
-        // Parse the SVG string as XML
-        var parse = new DOMParser(),
-            result = parse.parseFromString(theSvg, 'text/xml'),
-            inlinedSVG = result.getElementsByTagName('svg')[0];
+        } else {
 
-        // Replace the <img> tag with the inline SVG
-        svg.parentNode.replaceChild(inlinedSVG, svg);
+          console.error('There was an error retrieving the source of the SVG.');
 
-        // If the SVG should have expired remove it from localStorage
-        if(expires < today) {
-          localStorage.removeItem(src)
         }
 
-      }
+      };
 
+      request.onerror = function () {
+        console.error('There was an error connecting to the origin server.');
+      };
+
+      request.send();
+      
     });
 
   };
