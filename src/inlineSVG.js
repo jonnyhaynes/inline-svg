@@ -18,8 +18,7 @@
   // Defaults
   var defaults = {
     initClass: 'js-inlinesvg',
-    svgSelector: 'img.svg',
-    storeResults: true
+    svgSelector: 'img.svg'
   };
 
 
@@ -118,15 +117,15 @@
           inlinedSVG.removeAttribute('xml:space');
           inlinedSVG.removeAttribute('version');
 
-          // Add in the attributes from the original <img> except 'src' or
-          // 'alt', we don't need either
+          // Add in the attributes from the original <img> except `src` or
+          // `alt`, we don't need either
           Array.prototype.slice.call(attributes).forEach(function(attribute) {
             if(attribute.name !== 'src' && attribute.name !== 'alt') {
               inlinedSVG.setAttribute(attribute.name, attribute.value);
             }
           });
 
-          // Add an additional class the the inlined SVG to imply it was
+          // Add an additional class to the inlined SVG to imply it was
           // infact inlined, might be useful to know
           if (inlinedSVG.classList) {
             inlinedSVG.classList.add('inlined-svg');
