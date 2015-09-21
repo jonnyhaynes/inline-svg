@@ -42,7 +42,7 @@ For a live demo check out this [example on CodePen](http://codepen.io/jonnyhayne
 
 ## Bower
 
-If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.1.2"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.1.5"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
