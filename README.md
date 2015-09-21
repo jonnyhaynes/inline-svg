@@ -49,6 +49,7 @@ If you're using NPM to manage your dependencies you can include this plugin as a
 
 ## Changelog
 
+- **21/09/15:** 2.1.5 – Removing to code that should never have made it to release.
 - **21/09/15:** 2.1.4 – Version bump.
 - **21/09/15:** 2.1.3 – Version bump.
 - **26/08/15:** 2.1.2 – Removed localStorage. It just doesn't work that well when SVG's change etc.
