@@ -13,6 +13,7 @@
   // Variables
   var inlineSVG = {},
       supports = !!document.querySelector && !!root.addEventListener,
+      cache = {},
       settings;
 
   // Defaults
@@ -69,12 +70,64 @@
   
   /**
    * Grab all the SVGs that match the selector
-   * @public
+   * @private
    */
   var getAll = function () {
 
     var svgs = document.querySelectorAll(settings.svgSelector);
     return svgs;
+
+  };
+
+  /**
+   * Grab the source of the SVG
+   * @private
+   */
+  var getSource = function (svgURL) {
+
+    // if the browser supports the fetch api
+    if (self.fetch) {
+
+      fetch(svgURL).then(function (response) {
+        if(response.ok) {
+          console.log(response);
+        } else {
+          console.log('There was an error with response.');
+        }
+      }).catch(function (error) {
+        console.error('There has been a problem getting the source of the SVG: ' + error.message);
+      });
+
+    }
+
+    // the browser doesn't support the fetch api
+    else {
+
+      var request = new XMLHttpRequest();
+      request.open('GET', src, true);
+
+      request.onload = function () {
+
+      }
+
+      request.onerror = function () {
+        console.error('There was an error connecting to the origin server.');
+      };
+
+      request.send();
+
+    }
+
+  };
+
+  /**
+   * 
+   */
+  var parseAsXML = function (response) {
+
+    var parser = new DOMParser(),
+        result = parser.parseFromString(response.responseText, 'text/xml'),
+        inlinedSVG = result.getElementsByTagName('svg')[0];
 
   };
 
@@ -91,6 +144,10 @@
       // Store some attributes of the image
       var src = svg.src || svg.getAttribute('data-src'),
           attributes = svg.attributes;
+
+      cache[src] = "";
+
+      getSource(src);
 
       // Get the contents of the SVG
       var request = new XMLHttpRequest();

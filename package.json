@@ -1,6 +1,6 @@
 {
   "name": "inline-svg",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "devDependencies": {
     "grunt": "0.4.5",
     "grunt-cli": "0.1.13",

@@ -49,6 +49,7 @@ If you're using NPM to manage your dependencies you can include this plugin as a
 
 ## Changelog
 
+- **26/08/15:** 2.1.3 – Version bump.
 - **26/08/15:** 2.1.2 – Removed localStorage. It just doesn't work that well when SVG's change etc.
 - **31/07/15:** 2.1.1 – Added localStorage support to avoid making fresh HTTP request on every page load. When the contents of the SVG is loaded it is added to localStorage and then on repeat page loads the source is grabbed from localStorage.
 - **31/07/15:** 2.0.1 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously. 
