@@ -11,7 +11,7 @@
     "test": "grunt --verbose"
   },
   "description": "Takes an inline image with an SVG as it's source and swaps it for an inline SVG",
-  "main": "inlineSVG.js",
+  "main": "dist/inlineSVG.min.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonnyhaynes/inline-svg.git"
