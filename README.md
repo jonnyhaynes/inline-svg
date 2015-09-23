@@ -18,6 +18,7 @@ inlineSVG.init({
 }, callback);
 </script>
 ```
+The callback is optional and is only fired if all the images in the selection are successfully inlined. On the other hand the initClass is applied after the first successful replacement.
 
 The script will look for any `<img>` with a class that matches the `svgSelector` parameter and replace it with the SVG's source. Doing this enables you to manipulate the SVG with CSS and JavaScript.
 
@@ -35,8 +36,6 @@ svg:hover path {
   fill: #c00;
 }
 ```
-
-The callback is optional and is only fired if all the images in the selection are successfully inlined. On the other hand the initClass is applied after the first successful replacement.
 
 Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to the SVG. For increased accessibility the script will also copy across the `<img>` alt text and add in an `aria-labelledby` attribute and `<title>` element to the SVG. If you give the `<img>` a `longdesc` attribute, a `<desc>` will also be added as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
