@@ -21,7 +21,20 @@
     svgSelector: 'img.svg'
   };
 
+  /**
+   * Stolen from underscore.js
+   * @private
+   * @param {Int} times
+   * @param {Function} func
+   */
 
+  var after = function(times, func) {
+    return function() {
+      if (--times < 1) {
+        return func.apply(this, arguments);
+      }
+    };
+  };
   /**
    * Merge two objects together
    * @private
@@ -66,7 +79,7 @@
   };
 
   // Methods
-  
+
   /**
    * Grab all the SVGs that match the selector
    * @public
@@ -82,12 +95,13 @@
    * Inline all the SVGs in the array
    * @public
    */
-  var inliner = function () {
+  var inliner = function (cb) {
 
     var svgs = getAll();
+    var callback = after(svgs.length, cb);
 
     Array.prototype.forEach.call(svgs, function (svg, i) {
-      
+
       // Store some attributes of the image
       var src = svg.src || svg.getAttribute('data-src'),
           attributes = svg.attributes;
@@ -97,7 +111,7 @@
       request.open('GET', src, true);
 
       request.onload = function () {
-        
+
         if(request.status >= 200 && request.status < 400) {
 
           // Setup a parser to convert the response to text/xml in order for it
@@ -159,6 +173,11 @@
           // Replace the image with the SVG
           svg.parentNode.replaceChild(inlinedSVG, svg);
 
+          // Once inlined and a class to the HTML
+          document.documentElement.className += ' ' + settings.initClass;
+
+          // Fire the callback
+          callback(settings.svgSelector);
         } else {
 
           console.error('There was an error retrieving the source of the SVG.');
@@ -172,7 +191,7 @@
       };
 
       request.send();
-      
+
     });
 
   };
@@ -181,7 +200,7 @@
    * Initialise the inliner
    * @public
    */
-  inlineSVG.init = function (options) {
+  inlineSVG.init = function (options, callback) {
 
     // Test for support
     if (!supports) return;
@@ -190,10 +209,8 @@
     settings = extend(defaults, options || {});
 
     // Kick-off the inliner
-    inliner();
+    inliner(callback || function(){});
 
-    // Once inlined and a class to the HTML
-    document.documentElement.className += ' ' + settings.initClass;
 
   };
 

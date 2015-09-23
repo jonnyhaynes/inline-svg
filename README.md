@@ -15,11 +15,11 @@ inlineSVG.init({
   svgSelector: 'img.svg', // the class attached to all images that should be inlined
   initClass: 'js-inlinesvg', // class added to <html>
   storeResults: false // should the results be stored in localStorage
-});
+}, callback);
 </script>
 ```
 
-The script will look for any `<img>` with a class that matches the `svgSelector` parameter and replace it with the SVG's source. Doing this enables you to manipulate the SVG with CSS and JavaScript. 
+The script will look for any `<img>` with a class that matches the `svgSelector` parameter and replace it with the SVG's source. Doing this enables you to manipulate the SVG with CSS and JavaScript.
 
 ```html
 <img id="logo" class="svg" src="/images/logo.svg" alt="Some awesome company" />
@@ -35,6 +35,8 @@ svg:hover path {
   fill: #c00;
 }
 ```
+
+The callback is optional and is only fired if all the images in the selection are successfully inlined. On the other hand the initClass is applied after the first successful replacement.
 
 Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to the SVG. For increased accessibility the script will also copy across the `<img>` alt text and add in an `aria-labelledby` attribute and `<title>` element to the SVG. If you give the `<img>` a `longdesc` attribute, a `<desc>` will also be added as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
@@ -54,7 +56,7 @@ If you're using NPM to manage your dependencies you can include this plugin as a
 - **21/09/15:** 2.1.3 – Version bump.
 - **26/08/15:** 2.1.2 – Removed localStorage. It just doesn't work that well when SVG's change etc.
 - **31/07/15:** 2.1.1 – Added localStorage support to avoid making fresh HTTP request on every page load. When the contents of the SVG is loaded it is added to localStorage and then on repeat page loads the source is grabbed from localStorage.
-- **31/07/15:** 2.0.1 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously. 
+- **31/07/15:** 2.0.1 - Major upgrade. Added AMD support and fixed a long standing issue that would result in a warning in Google Chrome as we weren't handling the GET requests asynchronously.
 - **18/06/15:** 1.2.0 – Converted to a Node.js module
 - **19/03/15:** 1.0.5 – Cleaning code to comply with Code Climate
 - **16/12/14:** 1.0.4 – Updated README with new CodePen demo and added an extra line regarding browser support. Changed `aria-label` to `aria-labelledby` and also added `role="img"` for better accessibility.
