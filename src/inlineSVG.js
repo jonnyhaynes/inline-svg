@@ -35,6 +35,7 @@
       }
     };
   };
+
   /**
    * Merge two objects together
    * @private
@@ -173,11 +174,9 @@
           // Replace the image with the SVG
           svg.parentNode.replaceChild(inlinedSVG, svg);
 
-          // Once inlined and a class to the HTML
-          document.documentElement.className += ' ' + settings.initClass;
-
           // Fire the callback
           callback(settings.svgSelector);
+
         } else {
 
           console.error('There was an error retrieving the source of the SVG.');
@@ -211,6 +210,8 @@
     // Kick-off the inliner
     inliner(callback || function(){});
 
+    // Once inlined and a class to the HTML
+    document.documentElement.className += ' ' + settings.initClass;
 
   };
 

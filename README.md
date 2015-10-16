@@ -6,7 +6,7 @@ Takes an inline `<img>` with an SVG as its source and swaps it for an inline `<s
 
 ## How to use
 
-Add the Inline SVG script to your page and initialise the script. You can currently pass three options to the script: `svgSelector`, `initClass` and `storeResults`. If these are left out the script will use the defaults.
+Add the Inline SVG script to your page and initialise the script. You can currently pass three options to the script: `svgSelector` and `initClass`. If these are left out the script will use the defaults.
 
 ```html
 <script src="inlineSVG.min.js"></script>
@@ -14,7 +14,6 @@ Add the Inline SVG script to your page and initialise the script. You can curren
 inlineSVG.init({
   svgSelector: 'img.svg', // the class attached to all images that should be inlined
   initClass: 'js-inlinesvg', // class added to <html>
-  storeResults: false // should the results be stored in localStorage
 }, callback);
 </script>
 ```
@@ -43,13 +42,14 @@ For a live demo check out this [example on CodePen](http://codepen.io/jonnyhayne
 
 ## Bower
 
-If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.0"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.1"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
 
 ## Changelog
 
+- **16/10/15:** 2.2.1 – Fix for adding the `initClass` to the body each time an SVG is inlined.
 - **23/09/15:** 2.2.0 – Fix in package.json for main field when using as a module and added callback support to know when replacement is complete.
 - **21/09/15:** 2.1.5 – Removing to code that should never have made it to release.
 - **21/09/15:** 2.1.4 – Version bump.
