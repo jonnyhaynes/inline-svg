@@ -38,7 +38,7 @@ svg:hover path {
 
 Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to the SVG. For increased accessibility the script will also copy across the `<img>` alt text and add in an `aria-labelledby` attribute and `<title>` element to the SVG. If you give the `<img>` a `longdesc` attribute, a `<desc>` will also be added as per the [W3C's guidelines](http://www.w3.org/TR/SVG-access/) on SVG accessibility.
 
-<del>For a live demo check out this [example on CodePen](http://codepen.io/jonnyhaynes/pen/VYqroO).</del> The demo is still there it's just ay out of date and needs updating.
+<del>For a live demo check out this [example on CodePen](http://codepen.io/jonnyhaynes/pen/VYqroO).</del> The demo is still there it's just way out of date and needs updating.
 
 ## Bower
 
