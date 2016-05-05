@@ -42,13 +42,14 @@ Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to t
 
 ## Bower
 
-If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.1"` in your `bower.json` file and run `bower install`.
+If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.2"` in your `bower.json` file and run `bower install`.
 
 ## NPM
 If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
 
 ## Changelog
 
+- **05/05/16:** 2.2.2 – Fixed callback error if one is not defined.
 - **16/10/15:** 2.2.1 – Fix for adding the `initClass` to the body each time an SVG is inlined.
 - **23/09/15:** 2.2.0 – Fix in package.json for main field when using as a module and added callback support to know when replacement is complete.
 - **21/09/15:** 2.1.5 – Removing to code that should never have made it to release.
