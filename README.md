@@ -14,7 +14,9 @@ Add the Inline SVG script to your page and initialise the script. You can curren
 inlineSVG.init({
   svgSelector: 'img.svg', // the class attached to all images that should be inlined
   initClass: 'js-inlinesvg', // class added to <html>
-}, callback);
+}, function () {
+  console.log('All SVGs inlined');
+});
 </script>
 ```
 The callback is optional and is only fired if all the images in the selection are successfully inlined. On the other hand the initClass is applied after the first successful replacement.
