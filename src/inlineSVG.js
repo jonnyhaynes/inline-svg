@@ -175,9 +175,7 @@
           svg.parentNode.replaceChild(inlinedSVG, svg);
 
           // Fire the callback
-          if (typeof callback === 'function') {
-            callback(settings.svgSelector);
-          }
+          callback(settings.svgSelector);
 
         } else {
 
