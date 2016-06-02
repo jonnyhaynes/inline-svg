@@ -47,7 +47,18 @@ Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to t
 If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.3"` in your `bower.json` file and run `bower install`.
 
 ## NPM
-If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install inline-svg`.
+If you're using NPM to manage your dependencies you can include this plugin as a module. Just run `npm install --save-dev inline-svg`. You can then require the plugin as shown below.
+
+```javascript
+var inlineSVG = require('inline-svg');
+
+inlineSVG.init({
+  svgSelector: 'img.svg', // the class attached to all images that should be inlined
+  initClass: 'js-inlinesvg', // class added to <html>
+}, function () {
+  console.log('All SVGs inlined');
+});
+```
 
 ## Changelog
 
