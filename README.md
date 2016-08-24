@@ -42,6 +42,16 @@ Any additional attributes (`height`, `width`, `data-*`, etc) will be copied to t
 
 <del>For a live demo check out this [example on CodePen](http://codepen.io/jonnyhaynes/pen/VYqroO).</del> The demo is still there it's just way out of date and needs updating.
 
+## Performance
+
+By default, the image will be requested twice, once for initial load and secondly for requesting the SVG markup. A more efficent way to set this up would be to have your image src in a `data-src` attribute, this will prevent the initial request of the image.
+
+```html
+<img id="logo" class="svg" data-src="/images/logo.svg" alt="Some awesome company" />
+```
+
+The most harmful side effect of implementing Inline SVG this way is that if your Javascript fails or otherwise doesn't run, the image won't show at all. In the default setup, the image would still load.
+
 ## Bower
 
 If you're using [Bower](http://bower.io) to manage your front-end dependencies you can include this plugin as a component. Include `"inline-svg": "2.2.3"` in your `bower.json` file and run `bower install`.
