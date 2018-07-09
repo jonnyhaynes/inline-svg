@@ -27,13 +27,10 @@
    * @param {Int} times
    * @param {Function} func
    */
-
   var after = function(times, func) {
-    return function() {
-      if (--times < 1) {
-        return func.apply(this, arguments);
-      }
-    };
+    if (--times < 1) {
+      return func.apply(this, arguments);
+    }
   };
 
   /**
@@ -172,10 +169,14 @@
           }
 
           // Replace the image with the SVG
-          svg.parentNode.replaceChild(inlinedSVG, svg);
+          if (svg.parentNode) {
+            svg.parentNode.replaceChild(inlinedSVG, svg);
+          }
 
           // Fire the callback
-          callback(settings.svgSelector);
+          if (callback) {
+            callback(settings.svgSelector);
+          }
 
         } else {
 
