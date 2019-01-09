@@ -212,7 +212,7 @@
     inliner(callback || function(){});
 
     // Once inlined and a class to the HTML
-    document.documentElement.className += ' ' + settings.initClass;
+    document.documentElement.classList.add(settings.initClass);
 
   };
 
