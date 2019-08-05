@@ -28,8 +28,14 @@
    * @param {Function} func
    */
   var after = function(times, func) {
-    if (--times < 1) {
-      return func.apply(this, arguments);
+    var count = times;
+
+    return function() {
+        count --;
+
+        if (count === 0) {
+            func.apply(this, arguments);
+        }
     }
   };
 
