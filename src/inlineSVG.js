@@ -28,9 +28,11 @@
    * @param {Function} func
    */
   var after = function(times, func) {
-    if (--times < 1) {
-      return func.apply(this, arguments);
-    }
+    return function() {
+      if (--times < 1) {
+        return func.apply(this, arguments);
+      }
+    };  
   };
 
   /**
