@@ -32,7 +32,7 @@
       if (--times < 1) {
         return func.apply(this, arguments);
       }
-    };  
+    };
   };
 
   /**
@@ -89,6 +89,13 @@
     var svgs = document.querySelectorAll(settings.svgSelector);
     return svgs;
 
+  };
+
+  var uid = function () {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return '_' + Math.random().toString(36).substr(2, 9);
   };
 
   /**
@@ -155,19 +162,48 @@
             var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
                 descriptionText = document.createTextNode(attributes.longdesc.value);
 
+            description.setAttribute('id', uid());
             description.appendChild(descriptionText);
             inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
           }
 
           // Use the `alt` attribute if one exists
           if(attributes.alt) {
-            inlinedSVG.setAttribute('aria-labelledby', 'title');
-
             var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
                 titleText = document.createTextNode(attributes.alt.value);
 
+            title.setAttribute('id', uid());
             title.appendChild(titleText);
             inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
+
+            if(attributes.id) {
+              inlinedSVG.setAttribute('aria-labelledby', attributes.id.value);
+            } else if (!attributes.id) {
+              var getTitleId = function () {
+                if (inlinedSVG.getElementsByTagName('title').length > 0) {
+                  var titleId = inlinedSVG.getElementsByTagName('title')[0].getAttribute('id');
+                  return titleId;
+                } else {
+                  return '';
+                }
+              };
+
+              var getDescId = function () {
+                if (inlinedSVG.getElementsByTagName('desc').length > 0) {
+                  var descId = inlinedSVG.getElementsByTagName('desc')[0].getAttribute('id');
+                  return descId;
+                } else {
+                  return '';
+                }
+              };
+
+              inlinedSVG.setAttribute('aria-labelledby', getTitleId() + ' ' + getDescId());
+            }
+          }
+
+          if(!attributes.alt) {
+            inlinedSVG.setAttribute('aria-hidden', 'true');
+            inlinedSVG.setAttribute('role', 'presentation');
           }
 
           // Replace the image with the SVG
