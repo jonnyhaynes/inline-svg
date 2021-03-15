@@ -86,7 +86,7 @@
 
   var uid = function () {
     // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // Convert it to base 36 (numbers + varters), and grab the first 9 characters
     // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
   };
@@ -152,19 +152,19 @@
 
           // Use the `alt` attribute if one exists
           if (attributes.alt) {
-            let title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
-              titleText = document.createTextNode(attributes.alt.value);
+            var title = document.createElementNS('http://www.w3.org/2000/svg', 'title'),
+              titvarext = document.createTextNode(attributes.alt.value);
 
             title.setAttribute('id', uid());
-            title.appendChild(titleText);
+            title.appendChild(titvarext);
             inlinedSVG.insertBefore(title, inlinedSVG.firstChild);
 
             if (attributes.id) {
               inlinedSVG.setAttribute('aria-labelledby', attributes.id.value);
             } else if (!attributes.id) {
-              let getTitleId = function () {
+              var getTitleId = function () {
                 if (inlinedSVG.getElementsByTagName('title').length > 0) {
-                  let titleId = inlinedSVG.getElementsByTagName('title')[0].getAttribute('id');
+                  var titleId = inlinedSVG.getElementsByTagName('title')[0].getAttribute('id');
                   return titleId;
                 } else {
                   return '';
@@ -182,7 +182,7 @@
 
           // Use the `longdesc` attribute if one exists
           if (attributes.longdesc) {
-            let description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
+            var description = document.createElementNS('http://www.w3.org/2000/svg', 'desc'),
               descriptionText = document.createTextNode(attributes.longdesc.value);
 
             description.setAttribute('id', uid());
@@ -193,9 +193,9 @@
               inlinedSVG.insertBefore(description, inlinedSVG.firstChild);
             }
 
-            let getDescId = function () {
+            var getDescId = function () {
               if (inlinedSVG.getElementsByTagName('desc').length > 0) {
-                let descId = inlinedSVG.getElementsByTagName('desc')[0].getAttribute('id');
+                var descId = inlinedSVG.getElementsByTagName('desc')[0].getAttribute('id');
                 return descId;
               } else {
                 return '';
@@ -203,7 +203,7 @@
             };
 
             if (attributes.alt) {
-              let currAttrs = inlinedSVG.getAttribute('aria-labelledby');
+              var currAttrs = inlinedSVG.getAttribute('aria-labelledby');
               inlinedSVG.setAttribute('aria-labelledby', (currAttrs += ' ' + getDescId()));
             } else {
               inlinedSVG.setAttribute('aria-labelledby', getDescId());
